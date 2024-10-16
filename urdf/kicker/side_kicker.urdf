@@ -1,7 +1,7 @@
 <robot name="onshape">
-<link name="base_link">
+<link name="kicker_base">
 <visual>
-<origin xyz="4.336808689942017736e-19 -1.1384122811097796557e-18 0" rpy="0 -0 0" />
+<origin xyz="-0.012500000000000011102 0 0.15000000000000007772" rpy="0 -0 0" />
 <geometry>
 <mesh filename="package://urdf/kicker/kicker_base.stl"/>
 </geometry>
@@ -10,7 +10,7 @@
 </material>
 </visual>
 <collision>
-<origin xyz="4.336808689942017736e-19 -1.1384122811097796557e-18 0" rpy="0 -0 0" />
+<origin xyz="-0.012500000000000011102 0 0.15000000000000007772" rpy="0 -0 0" />
 <geometry>
 <mesh filename="package://urdf/kicker/kicker_base.stl"/>
 </geometry>
@@ -22,9 +22,9 @@
 </inertial>
 </link>
 
-<link name="kicker_link">
+<link name="kicker_arm">
 <visual>
-<origin xyz="0 1.530808498934191586e-18 0.025000000000000001388" rpy="3.141592653589793116 -0 0" />
+<origin xyz="0.39999999999999991118 0 -0.024999999999999911182" rpy="-1.570796326794896558 -1.570796326794896558 0" />
 <geometry>
 <mesh filename="package://urdf/kicker/kicker_arm.stl"/>
 </geometry>
@@ -33,7 +33,7 @@
 </material>
 </visual>
 <collision>
-<origin xyz="0 1.530808498934191586e-18 0.025000000000000001388" rpy="3.141592653589793116 -0 0" />
+<origin xyz="0.39999999999999991118 0 -0.024999999999999911182" rpy="-1.570796326794896558 -1.570796326794896558 0" />
 <geometry>
 <mesh filename="package://urdf/kicker/kicker_arm.stl"/>
 </geometry>
@@ -45,12 +45,12 @@
 </inertial>
 </link>
 
-<joint name="kicker_joint" type="revolute">
-<origin xyz="4.336808689942017736e-19 3.9239621782441154511e-19 0.025000000000000001388" rpy="3.141592653589793116 -0 0" />
-<parent link="base_link" />
-<child link="kicker_link" />
+<joint name="kicker_joint" type="prismatic">
+<origin xyz="0.012499999999999955591 -0.39999999999999991118 0.15000000000000007772" rpy="1.570796326794896558 -0 1.570796326794896558" />
+<parent link="kicker_base" />
+<child link="kicker_arm" />
 <axis xyz="0 0 1"/>
-<limit effort="1" velocity="20" lower="0" upper="1.0471975511965976313"/>
+<limit effort="1" velocity="20" lower="0" upper="1.1999999999999999556"/>
 <joint_properties friction="0.0"/>
 </joint>
 

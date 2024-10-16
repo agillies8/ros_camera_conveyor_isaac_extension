@@ -282,13 +282,13 @@ class UIBuilder:
 
 
         # Relative path to the assets folder
-        relative_path = Path("agg_omni_extensions/photoeye_conveyor_isaac_extension/usd/conveyor_photoeye_box.usd")
+        relative_path = Path("agg_omni_extensions/ros_camera_conveyor_isaac_extension/usd/ros_cam_conveyor_scene.usd")
 
         # Convert to absolute path
         absolute_path = relative_path.resolve()
 
         stage_utils.add_reference_to_stage(
-            usd_path="/home/agillies8/agg_omni_extensions/photoeye_conveyor_isaac_extension/usd/conveyor_photoeye_box.usd",
+            usd_path="/home/agillies8/agg_omni_extensions/ros_camera_conveyor_isaac_extension/usd/ros_cam_conveyor_scene.usd",
             prim_path="/World"
             )
 

@@ -235,9 +235,9 @@ class PhotoeyeConveyorScript:
     def my_script(self):
 
         #Set up the articulation objects for the 3 kickers   
-        kicker_prim_path = "/World/Kickers/kicker/"
-        kicker_01_prim_path = "/World/Kickers/kicker_01/"
-        kicker_02_prim_path = "/World/Kickers/kicker_02/"
+        kicker_prim_path = "/World/Kickers/side_kicker/"
+        kicker_01_prim_path = "/World/Kickers/side_kicker_01/"
+        kicker_02_prim_path = "/World/Kickers/side_kicker_02/"
 
         self.kicker = Articulation(prim_path=kicker_prim_path)
         self.kicker_01 = Articulation(prim_path=kicker_01_prim_path)
@@ -294,9 +294,9 @@ class PhotoeyeConveyorScript:
                 sensor_3.update_cube_length(0.0)
 
             #These will re-open the kicker after X seconds since they were closed
-            self.kicker_manager.check_kicker(5.0)
-            self.kicker_01_manager.check_kicker(5.0)
-            self.kicker_02_manager.check_kicker(5.0)
+            self.kicker_manager.check_kicker(0.5)
+            self.kicker_01_manager.check_kicker(0.5)
+            self.kicker_02_manager.check_kicker(0.5)
 
 
             spawner.spawn_box_once()
@@ -381,8 +381,8 @@ class BoxSpawner:
         # Get the current time
         current_time = og.Controller.attribute("/World/Conveyors/ConveyorTrack_11/ConveyorBeltGraph/OnTick.outputs:time").get()
         
-        # Check if more than 3 seconds have passed since the last box was spawned
-        if (current_time - self.initial_time) > 4.0:
+        # Check if more than x seconds have passed since the last box was spawned
+        if (current_time - self.initial_time) > 2.0:
             # Update the initial time to the current time
             self.initial_time = og.Controller.attribute("/World/Conveyors/ConveyorTrack_11/ConveyorBeltGraph/OnTick.outputs:time").get()
             

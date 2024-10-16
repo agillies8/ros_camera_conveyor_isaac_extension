@@ -1,13 +1,13 @@
 {
     "configuration": "default",
     "documentId": "7986bc7645dbf4e40b0e36fd",
-    "documentMicroversion": "d51a39c5c65f1745c7e8f2d2",
-    "elementId": "ea978f1c5de974e296d20b30",
+    "documentMicroversion": "c3225ca804079176db32516d",
+    "elementId": "65c976f25e9528d503c960b5",
     "fullConfiguration": "default",
-    "id": "ME2/0Y5s/7wp6QEUP",
+    "id": "MgiNA4WArewbWg0IN",
     "isStandardContent": false,
-    "name": "kicker_arm <1>",
-    "partId": "JOD",
+    "name": "Kicker Arm <1>",
+    "partId": "JKD",
     "suppressed": false,
     "type": "Part"
 }

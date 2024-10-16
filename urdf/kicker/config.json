@@ -3,9 +3,9 @@
 
     // Can be found in the URL when editing the assembly
     "documentId": "7986bc7645dbf4e40b0e36fd",
-    "versionId": "553fc5ae8f402c31f2295094",
+    "versionId": "a70ba7c3b49a2258ae9324ee",
     // If not specified, the first assembly will be used
-    "assemblyName": "kicker",
+    "assemblyName": "Side Kicker",
     // Can be urdf or sdf
     "outputFormat": "urdf",
     // The frames parts are kept in the final file
