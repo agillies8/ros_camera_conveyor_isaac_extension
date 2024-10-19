@@ -3,7 +3,7 @@
 <visual>
 <origin xyz="-0.012500000000000011102 0 0.15000000000000007772" rpy="0 -0 0" />
 <geometry>
-<mesh filename="package://urdf/kicker/kicker_base.stl"/>
+<mesh filename="package://isaac_cam_conveyor/urdf/kicker/kicker_base.stl"/>
 </geometry>
 <material name="kicker_base_material">
 <color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
@@ -12,7 +12,7 @@
 <collision>
 <origin xyz="-0.012500000000000011102 0 0.15000000000000007772" rpy="0 -0 0" />
 <geometry>
-<mesh filename="package://urdf/kicker/kicker_base.stl"/>
+<mesh filename="package://isaac_cam_conveyor/urdf/kicker/kicker_base.stl"/>
 </geometry>
 </collision>
 <inertial>
@@ -26,7 +26,7 @@
 <visual>
 <origin xyz="0.39999999999999991118 0 -0.024999999999999911182" rpy="-1.570796326794896558 -1.570796326794896558 0" />
 <geometry>
-<mesh filename="package://urdf/kicker/kicker_arm.stl"/>
+<mesh filename="package://isaac_cam_conveyor/urdf/kicker/kicker_arm.stl"/>
 </geometry>
 <material name="kicker_arm_material">
 <color rgba="0.64705882352941179736 0.64705882352941179736 0.64705882352941179736 1.0"/>
@@ -35,7 +35,7 @@
 <collision>
 <origin xyz="0.39999999999999991118 0 -0.024999999999999911182" rpy="-1.570796326794896558 -1.570796326794896558 0" />
 <geometry>
-<mesh filename="package://urdf/kicker/kicker_arm.stl"/>
+<mesh filename="package://isaac_cam_conveyor/urdf/kicker/kicker_arm.stl"/>
 </geometry>
 </collision>
 <inertial>

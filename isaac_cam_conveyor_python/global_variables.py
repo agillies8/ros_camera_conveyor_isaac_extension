@@ -7,6 +7,6 @@
 # license agreement from NVIDIA CORPORATION is strictly prohibited.
 #
 
-EXTENSION_TITLE = "ROS Camera Conveyor"
+EXTENSION_TITLE = "Isaac Cam Conveyor"
 
 EXTENSION_DESCRIPTION = "Demonstrate how ROS2 can be used to process images from cameras in Isaac Sim, and take actions with those cameras."

@@ -254,9 +254,9 @@ class PhotoeyeConveyorScript:
         close_kicker = ArticulationAction(joint_positions=np.array([0.0]), joint_indices=np.array([0]))
 
         #the kicker manager class here only exists bc were opening and closing the conveyor in sort of a time-based sloppy way
-        self.kicker_manager = KickerManager(self.kicker, open_kicker,close_kicker)
-        self.kicker_01_manager = KickerManager(self.kicker_01, open_kicker,close_kicker)
-        self.kicker_02_manager = KickerManager(self.kicker_02, open_kicker,close_kicker)
+        # self.kicker_manager = KickerManager(self.kicker, open_kicker,close_kicker)
+        # self.kicker_01_manager = KickerManager(self.kicker_01, open_kicker,close_kicker)
+        # self.kicker_02_manager = KickerManager(self.kicker_02, open_kicker,close_kicker)
 
         #the sensor checker class manages state of the sensors and box measurements
         sensor_1 = SensorChecker(self._ls, self.sensor_1_path)
@@ -273,31 +273,6 @@ class PhotoeyeConveyorScript:
             sensor_1.check_sensor_once()
             sensor_2.check_sensor_once()
             sensor_3.check_sensor_once()
-            #print(sensor_1.cube_length)
-
-            if 0.15< sensor_1.cube_length < 0.25:
-
-                print(f"First gate triggered. Box length: {sensor_1.cube_length}")
-                self.kicker_manager.open_kicker_action()
-                sensor_1.update_cube_length(0.0)
-
-            if 0.25< sensor_2.cube_length < 0.35:
-
-                print(f"Second gate triggered. Box length: {sensor_2.cube_length}")
-                self.kicker_01_manager.open_kicker_action()
-                sensor_2.update_cube_length(0.0)
-
-            if 0.35< sensor_3.cube_length < 0.45:
-
-                print(f"Third gate triggered. Box length: {sensor_3.cube_length}")
-                self.kicker_02_manager.open_kicker_action()
-                sensor_3.update_cube_length(0.0)
-
-            #These will re-open the kicker after X seconds since they were closed
-            self.kicker_manager.check_kicker(0.5)
-            self.kicker_01_manager.check_kicker(0.5)
-            self.kicker_02_manager.check_kicker(0.5)
-
 
             spawner.spawn_box_once()
 
@@ -407,45 +382,6 @@ class BoxSpawner:
         while True:
             self.spawn_box_once()
             yield ()  # To maintain compatibility with generator functions if needed
-
-
-class KickerManager:
-    def __init__(self, kicker, open_kicker, close_kicker):
-        self.kicker = kicker
-        self.open_kicker = open_kicker
-        self.close_kicker = close_kicker
-        self.initial_time = 0.0
-        self.kicker_state = "closed"  # Track the kicker state
-
-    # Method to record the current time when kicker opens
-    def open_kicker_action(self):
-        self.initial_time = og.Controller.attribute("/World/Conveyors/ConveyorTrack_11/ConveyorBeltGraph/OnTick.outputs:time").get()
-        self.kicker_state = "open"
-        print(f"Kicker opened at time: {self.initial_time}")
-        # Perform the actual kicker open action here
-        self.kicker.apply_action(self.open_kicker)
-
-    # Method to check if it's time to open the kicker
-    def check_kicker(self, duration):
-
-        if self.kicker_state == "open":
-            current_time = og.Controller.attribute("/World/Conveyors/ConveyorTrack_11/ConveyorBeltGraph/OnTick.outputs:time").get()
-            
-            # Check if the required duration has passed since the last action
-            if self.initial_time is not None and (current_time - self.initial_time) >= duration:
-                if self.kicker_state == "open":
-                    self.close_kicker_action()  
-                    
-    # Method to close the kicker (if needed)
-    def close_kicker_action(self):
-        self.kicker_state = "closed"
-        print(f"Kicker closed at time: {self.initial_time}")
-        # Perform the actual close action for the kicker
-        self.kicker.apply_action(self.close_kicker)
-        
-
-
-            
         
 
         
