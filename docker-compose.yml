@@ -1,0 +1,36 @@
+services:
+  isaac_cam_conveyor:
+    image: agillies/ros2-cam-base
+    # Interactive shell
+    stdin_open: true
+    tty: true
+    # Networking and IPC for ROS 2
+    network_mode: host
+    ipc: host
+    #Needed to display graphical applications
+    privileged: true
+    container_name: isaac_cam_conveyor  # Set custom container name
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      # Allows graphical programs in the container.
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      # Adds this as a ros package to ros2 workspace
+      - .:/ros2_ws/src/isaac_cam_conveyor 
+      # Allows graphical programs in the container.
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+    # working_dir: /ros2_ws
+    command: >
+      /bin/bash -c "
+      sudo apt update &&      
+      source /opt/ros/humble/setup.bash &&
+      source /ros2_ws/install/setup.bash && 
+      sudo apt install ros-humble-joint-state-publisher &&
+      sudo apt install ros-humble-joint-state-publisher-gui &&
+      colcon build --symlink-install &&
+      source /ros2_ws/install/setup.bash &&
+      ros2 launch isaac_cam_conveyor urdf_viewer_launch.py
+      "
