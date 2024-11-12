@@ -26,6 +26,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'image_saver_node = isaac_cam_conveyor.image_saver_node:main',
         ],
     },
 )
