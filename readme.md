@@ -28,5 +28,5 @@ ros2 run image_transport republish raw in:=/camera/rgb
 
 - Run this node on the reciever machine:
 ```
-ros2 run image_transport republish ffmpeg in/ffmpeg:=/out/ffmpeg raw
+ros2 run image_transport republish ffmpeg in/ffmpeg:=out/ffmpeg raw out:=image_raw/uncompressed --ros-args -p "ffmpeg_image_transport.map.hevc_nvenc:=hevc"
 ```
