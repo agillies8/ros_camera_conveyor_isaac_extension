@@ -9,3 +9,24 @@ and join from another term:
 ```
 docker exec -it isaac_cam_conveyor /bin/bash
 ```
+
+Dealing with image compression:
+
+- Insall image transport packages on all machines:
+
+```
+sudo apt install ros-<ros-distro>-image-transport
+sudo apt install ros-<ros-distro>-compressed-image-transport
+sudo apt-get install ros-${ROS_DISTRO}-ffmpeg-image-transport
+```
+
+- Run this node on the sender machine:
+
+```
+ros2 run image_transport republish raw in:=/camera/rgb
+```
+
+- Run this node on the reciever machine:
+```
+ros2 run image_transport republish ffmpeg in/ffmpeg:=/out/ffmpeg raw
+```
