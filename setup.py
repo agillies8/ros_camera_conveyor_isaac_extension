@@ -27,6 +27,10 @@ setup(
     entry_points={
         'console_scripts': [
             'image_saver_node = isaac_cam_conveyor.image_saver_node:main',
+            'yolo_detection_actor = isaac_cam_conveyor.yolo_detection_actor:main',
         ],
+        # 'launch': [
+        #     'kicker_controller_launch = isaac_cam_conveyor.kicker_controller.launch:generate_launch_description',
+        # ],
     },
 )

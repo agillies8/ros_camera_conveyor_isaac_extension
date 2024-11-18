@@ -18,26 +18,56 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
       # Adds this as a ros package to ros2 workspace
-      - .:/ros2_ws/src/isaac_cam_conveyor 
+      - .:/ros2_ws/src/isaac_cam_conveyor
+      - ~/yolo_ros/yolo_msgs:/ros2_ws/src/yolo_msgs
+
       # Allows graphical programs in the container.
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
       # Add rosbag directory
       - ~/rosbags:/rosbags
+
     # working_dir: /ros2_ws
     command: >
       /bin/bash -c "
       sudo apt-get update &&      
       source /opt/ros/humble/setup.bash &&
-      source /ros2_ws/install/setup.bash && 
       sudo apt install ros-humble-joint-state-publisher &&
       sudo apt install ros-humble-joint-state-publisher-gui &&
       sudo apt install ros-humble-image-transport &&
       sudo apt install ros-humble-compressed-image-transport &&
-      sudo apt install ros-humble-ffmpeg-image-transport &&
       colcon build --symlink-install &&
-      source /ros2_ws/install/setup.bash &&
       source /opt/ros/humble/setup.bash &&
       source /ros2_ws/install/setup.bash && 
-      ros2 launch isaac_cam_conveyor urdf_viewer_launch.py
+      ros2 launch isaac_cam_conveyor kicker_controller.launch.py
       "
+  # yolo_ros:
+  #   image: yolo_ros
+  #   # Interactive shell
+  #   stdin_open: true
+  #   tty: true
+  #   # Networking and IPC for ROS 2
+  #   network_mode: host
+  #   ipc: host
+  #   #Needed to display graphical applications
+  #   privileged: true
+  #   container_name: yolo_ros  # Set custom container name
+  #   environment:
+  #     - NVIDIA_VISIBLE_DEVICES=all
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: all
+  #             capabilities: [gpu]
+  #   volumes:
+  #     # Add rosbag directory
+  #     - ~/rosbags:/rosbags
+  #   # working_dir: /ros2_ws
+  #   command: >
+  #     /bin/bash -c "
+  #     source /opt/ros/humble/setup.bash &&
+  #     source install/setup.bash &&
+  #     ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera/rgb
+  #     "
