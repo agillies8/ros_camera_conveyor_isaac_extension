@@ -20,8 +20,10 @@ class YOLODetectionActor(Node):
         self.declare_parameter('joint_command_topic', '/joint_command')  # Topic for joint commands
         self.declare_parameter('joint_name', 'kicker_joint')  # Name of the joint to command
         self.declare_parameter('no_detection_timeout', 1.0)  # Timeout in seconds for publishing zero command
+        self.declare_parameter('image_sub_topic', 'kicker/detections')  # Timeout in seconds for publishing zero command
 
         self.target_classes = self.get_parameter('target_classes').get_parameter_value().string_array_value
+
         # Get the bounding box range values
         self.bbox_range = {
             'x_min': self.get_parameter('x_min').get_parameter_value().double_value,
@@ -29,14 +31,16 @@ class YOLODetectionActor(Node):
             'y_min': self.get_parameter('y_min').get_parameter_value().double_value,
             'y_max': self.get_parameter('y_max').get_parameter_value().double_value,
         }
+
         self.joint_command_topic = self.get_parameter('joint_command_topic').get_parameter_value().string_value
         self.joint_name = self.get_parameter('joint_name').get_parameter_value().string_value
         self.no_detection_timeout = self.get_parameter('no_detection_timeout').get_parameter_value().double_value
+        self.image_sub_topic = self.get_parameter('image_sub_topic').get_parameter_value().string_value
 
         # Subscriber for YOLO detections
         self.subscription = self.create_subscription(
             DetectionArray,
-            '/yolo/detections',  # Replace with your topic name
+            self.image_sub_topic,  # Replace with your topic name
             self.detection_callback,
             10  # QoS
         )

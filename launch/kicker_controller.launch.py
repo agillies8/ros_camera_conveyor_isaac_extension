@@ -13,8 +13,11 @@ def generate_launch_description():
 
     description_package = LaunchConfiguration("description_package", default = 'isaac_cam_conveyor')
 
-    rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare(description_package), "isaac_cam_conveyor", "rviz/isaac_cam_conveyor-config.rviz"]
+    rviz_config_filename = 'rviz/isaac_cam_conveyor-config.rviz'
+    # Specify the path to the RViz configuration file
+    rviz_config_file = os.path.join(
+        get_package_share_directory('isaac_cam_conveyor'),
+        rviz_config_filename
     )
 
     urdf_file_name = 'urdf/kicker/side_kicker.urdf'
@@ -42,13 +45,44 @@ def generate_launch_description():
             executable='yolo_detection_actor',
             name='yolo_detection_actor',
             parameters=[
-                {'target_classes': ['green-box']},
+                {'target_classes': ['red-box']},
                 {'x_min': 200.0},
                 {'x_max': 450.0},
                 {'y_min': 250.0},
                 {'y_max': 350.0},
                 {'joint_command_topic': 'kicker/joint_states'},
-                {'joint_name': 'kicker_joint'}
+                {'joint_name': 'kicker_joint'},
+                {'image_sub_topic' : 'kicker/detections'}
+            ]
+        ),
+        Node(
+            package='isaac_cam_conveyor',
+            executable='yolo_detection_actor',
+            name='yolo_detection_actor',
+            parameters=[
+                {'target_classes': ['green-box']},
+                {'x_min': 200.0},
+                {'x_max': 450.0},
+                {'y_min': 250.0},
+                {'y_max': 350.0},
+                {'joint_command_topic': 'kicker_01/joint_states'},
+                {'joint_name': 'kicker_joint'},
+                {'image_sub_topic' : 'kicker_01/detections'}
+            ]
+        ),
+        Node(
+            package='isaac_cam_conveyor',
+            executable='yolo_detection_actor',
+            name='yolo_detection_actor',
+            parameters=[
+                {'target_classes': ['green-box']},
+                {'x_min': 200.0},
+                {'x_max': 450.0},
+                {'y_min': 250.0},
+                {'y_max': 350.0},
+                {'joint_command_topic': 'kicker_02/joint_states'},
+                {'joint_name': 'kicker_joint'},
+                {'image_sub_topic' : 'kicker_02/detections'}
             ]
         ),
         Node(

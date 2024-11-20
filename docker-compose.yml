@@ -1,6 +1,9 @@
 services:
   isaac_cam_conveyor:
-    image: agillies/ros2-cam-base
+    #image: agillies/ros2-cam-base
+    build:
+      context: .  # The directory containing the Dockerfile
+      dockerfile: Dockerfile  # Optional: defaults to "Dockerfile" in the context directory
     # Interactive shell
     stdin_open: true
     tty: true
@@ -20,7 +23,6 @@ services:
       # Adds this as a ros package to ros2 workspace
       - .:/ros2_ws/src/isaac_cam_conveyor
       - ~/yolo_ros/yolo_msgs:/ros2_ws/src/yolo_msgs
-
       # Allows graphical programs in the container.
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
@@ -30,44 +32,91 @@ services:
     # working_dir: /ros2_ws
     command: >
       /bin/bash -c "
-      sudo apt-get update &&      
-      source /opt/ros/humble/setup.bash &&
-      sudo apt install ros-humble-joint-state-publisher &&
-      sudo apt install ros-humble-joint-state-publisher-gui &&
-      sudo apt install ros-humble-image-transport &&
-      sudo apt install ros-humble-compressed-image-transport &&
       colcon build --symlink-install &&
       source /opt/ros/humble/setup.bash &&
       source /ros2_ws/install/setup.bash && 
       ros2 launch isaac_cam_conveyor kicker_controller.launch.py
       "
-  # yolo_ros:
-  #   image: yolo_ros
-  #   # Interactive shell
-  #   stdin_open: true
-  #   tty: true
-  #   # Networking and IPC for ROS 2
-  #   network_mode: host
-  #   ipc: host
-  #   #Needed to display graphical applications
-  #   privileged: true
-  #   container_name: yolo_ros  # Set custom container name
-  #   environment:
-  #     - NVIDIA_VISIBLE_DEVICES=all
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         devices:
-  #           - driver: nvidia
-  #             count: all
-  #             capabilities: [gpu]
-  #   volumes:
-  #     # Add rosbag directory
-  #     - ~/rosbags:/rosbags
-  #   # working_dir: /ros2_ws
-  #   command: >
-  #     /bin/bash -c "
-  #     source /opt/ros/humble/setup.bash &&
-  #     source install/setup.bash &&
-  #     ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera/rgb
-  #     "
+  kicker_yolo_ros:
+    image: yolo_ros
+    # Interactive shell
+    stdin_open: true
+    tty: true
+    #network_mode: host
+    privileged: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      #Add rosbag directory
+      - ~/rosbags:/rosbags
+      - ~/yolo_ros:/root/ros2_ws/src
+      #Allows graphical programs in the container.
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+    command: >
+      /bin/bash -c "
+      source /opt/ros/humble/setup.bash &&
+      source install/setup.bash &&
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker
+      "
+
+  kicker_1_yolo_ros:
+    image: yolo_ros
+    # Interactive shell
+    stdin_open: true
+    tty: true
+    #network_mode: host
+    privileged: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      #Add rosbag directory
+      - ~/rosbags:/rosbags
+      - ~/yolo_ros:/root/ros2_ws/src
+      #Allows graphical programs in the container.
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+    command: >
+      /bin/bash -c "
+      source /opt/ros/humble/setup.bash &&
+      source install/setup.bash &&
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_01/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker_1
+      "
+
+  kicker_2_yolo_ros:
+    image: yolo_ros
+    # Interactive shell
+    stdin_open: true
+    tty: true
+    #network_mode: host
+    privileged: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      #Add rosbag directory
+      - ~/rosbags:/rosbags
+      - ~/yolo_ros:/root/ros2_ws/src
+      #Allows graphical programs in the container.
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+    command: >
+      /bin/bash -c "
+      source /opt/ros/humble/setup.bash &&
+      source install/setup.bash &&
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_02/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker_2
+      "
