@@ -38,6 +38,7 @@ services:
       ros2 launch isaac_cam_conveyor kicker_controller.launch.py
       "
   kicker_yolo_ros:
+    container_name: yolo_ros  # Set custom container name
     image: yolo_ros
     # Interactive shell
     stdin_open: true
@@ -60,12 +61,14 @@ services:
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
     command: >
       /bin/bash -c "
+      colcon build &&
       source /opt/ros/humble/setup.bash &&
       source install/setup.bash &&
       ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker
       "
 
   kicker_1_yolo_ros:
+    container_name: yolo_ros_1  # Set custom container name
     image: yolo_ros
     # Interactive shell
     stdin_open: true
@@ -88,12 +91,14 @@ services:
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
     command: >
       /bin/bash -c "
+      colcon build &&
       source /opt/ros/humble/setup.bash &&
       source install/setup.bash &&
-      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_01/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker_1
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_01/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker_01
       "
 
   kicker_2_yolo_ros:
+    container_name: yolo_ros_2  # Set custom container name
     image: yolo_ros
     # Interactive shell
     stdin_open: true
@@ -116,9 +121,10 @@ services:
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
     command: >
       /bin/bash -c "
+      colcon build &&
       source /opt/ros/humble/setup.bash &&
       source install/setup.bash &&
-      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_02/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker_2
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_02/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker_02
       "
 
   cam_decompressor:

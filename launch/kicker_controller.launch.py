@@ -49,8 +49,8 @@ def generate_launch_description():
                 {'x_min': 200.0},
                 {'x_max': 450.0},
                 {'y_min': 250.0},
-                {'y_max': 350.0},
-                {'joint_command_topic': 'kicker/joint_states'},
+                {'y_max': 450.0},
+                {'joint_command_topic': 'kicker/joint_command'},
                 {'joint_name': 'kicker_joint'},
                 {'image_sub_topic' : 'kicker/detections'}
             ]
@@ -64,8 +64,8 @@ def generate_launch_description():
                 {'x_min': 200.0},
                 {'x_max': 450.0},
                 {'y_min': 250.0},
-                {'y_max': 350.0},
-                {'joint_command_topic': 'kicker_01/joint_states'},
+                {'y_max': 450.0},
+                {'joint_command_topic': 'kicker_01/joint_command'},
                 {'joint_name': 'kicker_joint'},
                 {'image_sub_topic' : 'kicker_01/detections'}
             ]
@@ -75,12 +75,12 @@ def generate_launch_description():
             executable='yolo_detection_actor',
             name='yolo_detection_actor',
             parameters=[
-                {'target_classes': ['green-box']},
+                {'target_classes': ['blue-box']},
                 {'x_min': 200.0},
                 {'x_max': 450.0},
                 {'y_min': 250.0},
-                {'y_max': 350.0},
-                {'joint_command_topic': 'kicker_02/joint_states'},
+                {'y_max': 450.0},
+                {'joint_command_topic': 'kicker_02/joint_command'},
                 {'joint_name': 'kicker_joint'},
                 {'image_sub_topic' : 'kicker_02/detections'}
             ]
