@@ -12,18 +12,10 @@ docker exec -it isaac_cam_conveyor /bin/bash -c "source /opt/ros/humble/setup.ba
 
 Dealing with image compression:
 
-- Insall image transport packages on all machines:
-
-```
-sudo apt install ros-<ros-distro>-image-transport
-sudo apt install ros-<ros-distro>-compressed-image-transport
-sudo apt-get install ros-${ROS_DISTRO}-ffmpeg-image-transport
-```
-
 - Run this node on the sender machine:
 
 ```
-ros2 run image_transport republish raw in:=/camera/rgb
+ros2 run image_transport republish raw in:=/camera/rgb --ros-args -p "ffmpeg_image_transport.encoding:=hevc_nvenc" --namespace cam_compressed/
 ```
 
 - Run this node on the reciever machine:

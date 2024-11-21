@@ -120,3 +120,29 @@ services:
       source install/setup.bash &&
       ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_02/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker_2
       "
+
+  cam_decompressor:
+      build:
+        context: /compressor_container  # The directory containing the Dockerfile
+        args:
+          MODE: decompress  # Change to 'decompress' for decompression mode
+        dockerfile: DOCKERFILE  # Optional: defaults to "Dockerfile" in the context directory
+      # Interactive shell
+      stdin_open: true
+      tty: true
+      # Networking and IPC for ROS 2
+      network_mode: host
+      ipc: host
+      #Needed to display graphical applications
+      privileged: true
+      container_name: cam_decompressor  # Set custom container name
+      deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: all
+                capabilities: [gpu]
+
+  
+  
