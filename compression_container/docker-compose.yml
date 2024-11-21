@@ -1,0 +1,25 @@
+services:
+  cam_compressor:
+      build:
+        context: .  # The directory containing the Dockerfile
+        args:
+          BUILD_MODE: "compress"
+        dockerfile: DOCKERFILE  # Optional: defaults to "Dockerfile" in the context directory
+      # environment:
+      #   - MODE = compress  # Change to 'decompress' for decompression mode      
+      # Interactive shell
+      stdin_open: true
+      tty: true
+      # Networking and IPC for ROS 2
+      network_mode: host
+      ipc: host
+      #Needed to display graphical applications
+      privileged: true
+      container_name: cam_compressor  # Set custom container name
+      deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: all
+                capabilities: [gpu]
