@@ -62,7 +62,7 @@ services:
       /bin/bash -c "
       source /opt/ros/humble/setup.bash &&
       source install/setup.bash &&
-      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker
       "
 
   kicker_1_yolo_ros:
@@ -90,7 +90,7 @@ services:
       /bin/bash -c "
       source /opt/ros/humble/setup.bash &&
       source install/setup.bash &&
-      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_01/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker_1
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_01/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker_1
       "
 
   kicker_2_yolo_ros:
@@ -118,14 +118,14 @@ services:
       /bin/bash -c "
       source /opt/ros/humble/setup.bash &&
       source install/setup.bash &&
-      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_02/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker_2
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_02/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker_2
       "
 
   cam_decompressor:
       build:
-        context: /compressor_container  # The directory containing the Dockerfile
+        context: compression_container  # The directory containing the Dockerfile
         args:
-          MODE: decompress  # Change to 'decompress' for decompression mode
+          BUILD_MODE: "decompress"  # Change to 'decompress' for decompression mode
         dockerfile: DOCKERFILE  # Optional: defaults to "Dockerfile" in the context directory
       # Interactive shell
       stdin_open: true

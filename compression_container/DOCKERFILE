@@ -35,8 +35,8 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Set a default build argument
-ARG BUILD_MODE=compress
 # Export the build argument to the runtime environment
+ARG BUILD_MODE
 ENV MODE=${BUILD_MODE}
 
 ENTRYPOINT ["/entrypoint.sh"]
