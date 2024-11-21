@@ -5,13 +5,13 @@ set -e
 if [ "$MODE" = "compress" ]; then
     # Start ROS2 nodes concurrently
     source /opt/ros/humble/setup.bash && \
-    ros2 run image_transport republish raw in:=/rgb --ros-args -p "ffmpeg_image_transport.encoding:=hevc_nvenc" -r __ns:=/camera &
+    ros2 run image_transport republish raw in:=/camera/rgb --ros-args -p "ffmpeg_image_transport.encoding:=hevc_nvenc" -r __ns:=/camera &
 
     source /opt/ros/humble/setup.bash && \
-    ros2 run image_transport republish raw in:=/rgb --ros-args -p "ffmpeg_image_transport.encoding:=hevc_nvenc" -r __ns:=/camera_01 &
+    ros2 run image_transport republish raw in:=/camera_01/rgb --ros-args -p "ffmpeg_image_transport.encoding:=hevc_nvenc" -r __ns:=/camera_01 &
 
     source /opt/ros/humble/setup.bash && \
-    ros2 run image_transport republish raw in:=/rgb --ros-args -p "ffmpeg_image_transport.encoding:=hevc_nvenc" -r __ns:=/camera_02 &
+    ros2 run image_transport republish raw in:=/camera_02/rgb --ros-args -p "ffmpeg_image_transport.encoding:=hevc_nvenc" -r __ns:=/camera_02 &
 
 elif [ "$MODE" = "decompress" ]; then
     # Start ROS2 nodes concurrently
