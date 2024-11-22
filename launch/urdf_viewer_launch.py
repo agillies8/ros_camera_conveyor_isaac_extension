@@ -38,8 +38,10 @@ def generate_launch_description():
             name='robot_state_publisher',
             output='screen',
             namespace='kicker',
-            parameters=[{'use_sim_time': use_sim_time, 'robot_description': robot_desc, 'frame_prefix': 'kicker/'}],
-            ),
+            parameters=[{'use_sim_time': use_sim_time,
+                         'robot_description': robot_desc,
+                         'frame_prefix':'kicker/'}],
+            arguments=[urdf]),
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
@@ -49,7 +51,7 @@ def generate_launch_description():
             parameters=[{
                 'use_sim_time': use_sim_time,
                 'robot_description': robot_desc,
-                'frame_prefix': 'World_Kickers_side_kicker_01_/',
+                'frame_prefix':'kicker_01/',
                 'publish_frequency': 10.0,}],
             ),
         Node(
@@ -58,29 +60,35 @@ def generate_launch_description():
             name='robot_state_publisher_2',
             output='screen',
             namespace='kicker_02',
-            parameters=[{'use_sim_time': use_sim_time, 'robot_description': robot_desc, 'frame_prefix': 'World_Kickers_side_kicker_02_/',}],
+            parameters=[{'use_sim_time': use_sim_time,
+                         'robot_description': robot_desc,
+                         'frame_prefix':'kicker_02/',}],
             ),
         Node(
-            package='joint_state_publisher_gui',
-            executable='joint_state_publisher_gui',
-            name='joint_state_publisher_gui',
-            namespace='kicker',
-            arguments=[urdf]),
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            name='static_transform_publisher',
+            output='screen',
+            arguments=['0', '0', '0', '0', '0', '0', 'kicker_base', 'kicker/kicker_base']
+        ),
         Node(
-            package='joint_state_publisher_gui',
-            executable='joint_state_publisher_gui',
-            name='joint_state_publisher_gui',
-            namespace='kicker_01',
-            arguments=[urdf]),
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            name='static_transform_publisher',
+            output='screen',
+            arguments=['0', '0', '0', '0', '0', '0', 'World_Kickers_side_kicker_01_kicker_base', 'kicker_01/kicker_base']
+        ),
         Node(
-            package='joint_state_publisher_gui',
-            executable='joint_state_publisher_gui',
-            name='joint_state_publisher_gui',
-            namespace='kicker_02',
-            arguments=[urdf]),
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            name='static_transform_publisher',
+            output='screen',
+            arguments=['0', '0', '0', '0', '0', '0', 'World_Kickers_side_kicker_02_kicker_base', 'kicker_02/kicker_base']
+        ),
         Node(
             package='rviz2',
             executable='rviz2',
             output='screen',
-            arguments=['-d', rviz_config_file]),
+            arguments=['-d', rviz_config_file]
+            ),
     ])
