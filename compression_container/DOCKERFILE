@@ -1,9 +1,5 @@
 ARG ROS_DISTRO=humble
 
-
-
-
-
 ########################################
 # Base Image for ISAAC CAMERA EXTENSION #
 ########################################

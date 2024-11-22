@@ -23,19 +23,20 @@ services:
       # Adds this as a ros package to ros2 workspace
       - .:/ros2_ws/src/isaac_cam_conveyor
       - ~/yolo_ros/yolo_msgs:/ros2_ws/src/yolo_msgs
+      - ~/robot_state_publisher:/ros2_ws/src/robot_state_publisher
       # Allows graphical programs in the container.
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
       # Add rosbag directory
       - ~/rosbags:/rosbags
-
     # working_dir: /ros2_ws
     command: >
       /bin/bash -c "
-      colcon build --symlink-install &&
+      rm -rf ~/.ros2 &&
+      colcon build &&
       source /opt/ros/humble/setup.bash &&
       source /ros2_ws/install/setup.bash && 
-      ros2 launch isaac_cam_conveyor kicker_controller.launch.py
+      ros2 launch isaac_cam_conveyor urdf_viewer_launch.py
       "
   kicker_yolo_ros:
     container_name: yolo_ros  # Set custom container name

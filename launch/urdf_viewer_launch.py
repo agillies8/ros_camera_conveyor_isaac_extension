@@ -13,8 +13,11 @@ def generate_launch_description():
 
     description_package = LaunchConfiguration("description_package", default = 'isaac_cam_conveyor')
 
-    rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare(description_package), "isaac_cam_conveyor", "rviz/isaac_cam_conveyor-config.rviz"]
+    rviz_config_filename = 'rviz/isaac_cam_conveyor-config.rviz'
+    # Specify the path to the RViz configuration file
+    rviz_config_file = os.path.join(
+        get_package_share_directory('isaac_cam_conveyor'),
+        rviz_config_filename
     )
 
     urdf_file_name = 'urdf/kicker/side_kicker.urdf'
@@ -34,13 +37,46 @@ def generate_launch_description():
             executable='robot_state_publisher',
             name='robot_state_publisher',
             output='screen',
-            parameters=[{'use_sim_time': use_sim_time, 'robot_description': robot_desc}],
+            namespace='kicker',
+            parameters=[{'use_sim_time': use_sim_time, 'robot_description': robot_desc, 'frame_prefix': 'kicker/'}],
+            ),
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            name='robot_state_publisher_1',
+            output='screen',
+            namespace='kicker_01',
+            parameters=[{
+                'use_sim_time': use_sim_time,
+                'robot_description': robot_desc,
+                'frame_prefix': 'World_Kickers_side_kicker_01_/',
+                'publish_frequency': 10.0,}],
+            ),
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            name='robot_state_publisher_2',
+            output='screen',
+            namespace='kicker_02',
+            parameters=[{'use_sim_time': use_sim_time, 'robot_description': robot_desc, 'frame_prefix': 'World_Kickers_side_kicker_02_/',}],
+            ),
+        Node(
+            package='joint_state_publisher_gui',
+            executable='joint_state_publisher_gui',
+            name='joint_state_publisher_gui',
+            namespace='kicker',
             arguments=[urdf]),
         Node(
             package='joint_state_publisher_gui',
             executable='joint_state_publisher_gui',
             name='joint_state_publisher_gui',
-            output='screen',
+            namespace='kicker_01',
+            arguments=[urdf]),
+        Node(
+            package='joint_state_publisher_gui',
+            executable='joint_state_publisher_gui',
+            name='joint_state_publisher_gui',
+            namespace='kicker_02',
             arguments=[urdf]),
         Node(
             package='rviz2',

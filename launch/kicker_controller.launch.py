@@ -39,50 +39,73 @@ def generate_launch_description():
             output='screen',
             namespace='kicker',
             parameters=[{'use_sim_time': use_sim_time, 'robot_description': robot_desc}],
-            arguments=[urdf]),
+            ),
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            name='robot_state_publisher_1',
+            output='screen',
+            namespace='kicker_01',
+            parameters=[{
+                'use_sim_time': use_sim_time,
+                'robot_description': robot_desc,
+                'frame_prefix': 'World_Kickers_side_kicker_01_/',
+                'publish_frequency': 10.0,}],
+            ),
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            name='robot_state_publisher_2',
+            output='screen',
+            namespace='kicker_02',
+            parameters=[{'use_sim_time': use_sim_time, 'robot_description': robot_desc, 'frame_prefix': 'World_Kickers_side_kicker_02_/',}],
+            ),
         Node(
             package='isaac_cam_conveyor',
             executable='yolo_detection_actor',
             name='yolo_detection_actor',
+            namespace='kicker',
             parameters=[
                 {'target_classes': ['red-box']},
                 {'x_min': 200.0},
                 {'x_max': 450.0},
                 {'y_min': 250.0},
                 {'y_max': 450.0},
-                {'joint_command_topic': 'kicker/joint_command'},
+                {'joint_command_topic': 'joint_command'},
                 {'joint_name': 'kicker_joint'},
-                {'image_sub_topic' : 'kicker/detections'}
+                {'image_sub_topic' : 'detections'}
             ]
         ),
         Node(
             package='isaac_cam_conveyor',
             executable='yolo_detection_actor',
             name='yolo_detection_actor',
+            namespace='kicker_01',
             parameters=[
                 {'target_classes': ['green-box']},
                 {'x_min': 200.0},
                 {'x_max': 450.0},
                 {'y_min': 250.0},
                 {'y_max': 450.0},
-                {'joint_command_topic': 'kicker_01/joint_command'},
+                {'joint_command_topic': 'joint_command'},
                 {'joint_name': 'kicker_joint'},
-                {'image_sub_topic' : 'kicker_01/detections'}
+                {'image_sub_topic' : 'detections'}
             ]
         ),
         Node(
             package='isaac_cam_conveyor',
             executable='yolo_detection_actor',
             name='yolo_detection_actor',
+            namespace='kicker_02',
             parameters=[
                 {'target_classes': ['blue-box']},
                 {'x_min': 200.0},
                 {'x_max': 450.0},
                 {'y_min': 250.0},
                 {'y_max': 450.0},
-                {'joint_command_topic': 'kicker_02/joint_command'},
+                {'joint_command_topic': 'joint_command'},
                 {'joint_name': 'kicker_joint'},
-                {'image_sub_topic' : 'kicker_02/detections'}
+                {'image_sub_topic' : 'detections'}
             ]
         ),
         Node(
