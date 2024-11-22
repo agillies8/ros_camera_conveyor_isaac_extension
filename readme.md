@@ -34,3 +34,8 @@ docker run -it --rm --gpus all yolo_ros
 
 ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera/rgb threshold:=0.7 imgsz_height:=480
 ```
+
+Or to run compression from a single terminal without docker, go to the /compression_container dir and run:
+```
+MODE=compress ./entrypoint.sh
+```

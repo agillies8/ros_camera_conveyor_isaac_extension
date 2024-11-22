@@ -38,5 +38,5 @@ RUN chmod +x /entrypoint.sh
 # Export the build argument to the runtime environment
 ARG BUILD_MODE
 ENV MODE=${BUILD_MODE}
-
+ENV NVIDIA_DRIVER_CAPABILITIES=all
 ENTRYPOINT ["/entrypoint.sh"]
