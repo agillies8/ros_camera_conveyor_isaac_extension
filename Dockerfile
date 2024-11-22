@@ -17,7 +17,8 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash \
  && rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y \
  && colcon build --symlink-install
 
-RUN sudo apt-get update && \     
+RUN sudo apt-get update && \
+sudo apt-get upgrade -y && \     
 source /opt/ros/humble/setup.bash && \
 sudo apt install ros-humble-joint-state-publisher && \
 sudo apt install ros-humble-joint-state-publisher-gui
