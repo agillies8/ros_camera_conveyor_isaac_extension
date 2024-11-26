@@ -8,8 +8,8 @@ services:
     stdin_open: true
     tty: true
     # Networking and IPC for ROS 2
-    network_mode: host
-    ipc: host
+    # network_mode: host
+    # ipc: host
     #Needed to display graphical applications
     privileged: true
     container_name: isaac_cam_conveyor  # Set custom container name
@@ -63,7 +63,7 @@ services:
       colcon build &&
       source /opt/ros/humble/setup.bash &&
       source install/setup.bash &&
-      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker
       "
 
   kicker_1_yolo_ros:
@@ -93,7 +93,7 @@ services:
       colcon build &&
       source /opt/ros/humble/setup.bash &&
       source install/setup.bash &&
-      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_01/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker_01
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_01/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker_01
       "
 
   kicker_2_yolo_ros:
@@ -123,31 +123,31 @@ services:
       colcon build &&
       source /opt/ros/humble/setup.bash &&
       source install/setup.bash &&
-      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_02/image_raw/uncompressed threshold:=0.7 imgsz_height:=480 namespace:=kicker_02
+      ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_02/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker_02
       "
 
-  cam_decompressor:
-      build:
-        context: compression_container  # The directory containing the Dockerfile
-        args:
-          BUILD_MODE: "decompress"  # Change to 'decompress' for decompression mode
-        dockerfile: DOCKERFILE  # Optional: defaults to "Dockerfile" in the context directory
-      # Interactive shell
-      stdin_open: true
-      tty: true
-      # Networking and IPC for ROS 2
-      network_mode: host
-      ipc: host
-      #Needed to display graphical applications
-      privileged: true
-      container_name: cam_decompressor  # Set custom container name
-      deploy:
-        resources:
-          reservations:
-            devices:
-              - driver: nvidia
-                count: all
-                capabilities: [gpu]
+  # cam_decompressor:
+  #     build:
+  #       context: compression_container  # The directory containing the Dockerfile
+  #       args:
+  #         BUILD_MODE: "decompress"  # Change to 'decompress' for decompression mode
+  #       dockerfile: DOCKERFILE  # Optional: defaults to "Dockerfile" in the context directory
+  #     # Interactive shell
+  #     stdin_open: true
+  #     tty: true
+  #     # Networking and IPC for ROS 2
+  #     network_mode: host
+  #     ipc: host
+  #     #Needed to display graphical applications
+  #     privileged: true
+  #     container_name: cam_decompressor  # Set custom container name
+  #     deploy:
+  #       resources:
+  #         reservations:
+  #           devices:
+  #             - driver: nvidia
+  #               count: all
+  #               capabilities: [gpu]
 
   
   

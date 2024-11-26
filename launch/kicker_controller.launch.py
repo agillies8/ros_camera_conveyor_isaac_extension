@@ -92,7 +92,7 @@ def generate_launch_description():
             namespace='kicker',
             parameters=[
                 {'target_classes': ['red-box']},
-                {'x_min': 200.0},
+                {'x_min': 300.0},
                 {'x_max': 450.0},
                 {'y_min': 250.0},
                 {'y_max': 450.0},
@@ -108,7 +108,7 @@ def generate_launch_description():
             namespace='kicker_01',
             parameters=[
                 {'target_classes': ['green-box']},
-                {'x_min': 200.0},
+                {'x_min': 300.0},
                 {'x_max': 450.0},
                 {'y_min': 250.0},
                 {'y_max': 450.0},
@@ -124,7 +124,7 @@ def generate_launch_description():
             namespace='kicker_02',
             parameters=[
                 {'target_classes': ['blue-box']},
-                {'x_min': 200.0},
+                {'x_min': 300.0},
                 {'x_max': 450.0},
                 {'y_min': 250.0},
                 {'y_max': 450.0},
