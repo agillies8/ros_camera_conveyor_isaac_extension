@@ -32,6 +32,7 @@ def generate_launch_description():
             'use_sim_time',
             default_value='false',
             description='Use simulation (Gazebo) clock if true'),
+            # Robot state publishers below for each kicker. Added namespace and prefix so tf tree and joint_subscriber get the right kicker
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
@@ -64,6 +65,7 @@ def generate_launch_description():
                          'robot_description': robot_desc,
                          'frame_prefix':'kicker_02/',}],
             ),
+            #Static publishers below correct the tf naming coming from isaac sim so they can all be on the same tree
         Node(
             package='tf2_ros',
             executable='static_transform_publisher',
@@ -85,6 +87,7 @@ def generate_launch_description():
             output='screen',
             arguments=['0', '0', '0', '0', '0', '0', 'World_Kickers_side_kicker_02_kicker_base', 'kicker_02/kicker_base']
         ),
+        #the 3 yolo detection actor nodes below take in the labeled data from the yolo nodes and create commands for the kickers. the actual yolo nodes are in a different container, see docker compose for those
         Node(
             package='isaac_cam_conveyor',
             executable='yolo_detection_actor',
@@ -133,6 +136,7 @@ def generate_launch_description():
                 {'image_sub_topic' : 'detections'}
             ]
         ),
+        #this one launches rviz
         Node(
             package='rviz2',
             executable='rviz2',

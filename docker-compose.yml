@@ -1,4 +1,5 @@
 services:
+  # main ros service that runs the kicker ros package
   isaac_cam_conveyor:
     #image: agillies/ros2-cam-base
     build:
@@ -36,6 +37,7 @@ services:
       source /ros2_ws/install/setup.bash && 
       ros2 launch isaac_cam_conveyor kicker_controller.launch.py
       "
+#the following 3 services all spin up a yolo ros node that each processes one of the 3 cam feeds
   kicker_yolo_ros:
     container_name: yolo_ros  # Set custom container name
     image: yolo_ros
