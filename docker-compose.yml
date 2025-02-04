@@ -56,7 +56,7 @@ services:
     volumes:
       #Add rosbag directory
       - ~/rosbags:/rosbags
-      - ~/yolo_ros:/root/ros2_ws/src
+      - ./models:/root/ros2_ws/src/models
       #Allows graphical programs in the container.
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
@@ -86,7 +86,7 @@ services:
     volumes:
       #Add rosbag directory
       - ~/rosbags:/rosbags
-      - ~/yolo_ros:/root/ros2_ws/src
+      - ./models:/root/ros2_ws/src/models
       #Allows graphical programs in the container.
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
@@ -116,7 +116,7 @@ services:
     volumes:
       #Add rosbag directory
       - ~/rosbags:/rosbags
-      - ~/yolo_ros:/root/ros2_ws/src
+      - ./models:/root/ros2_ws/src/models
       #Allows graphical programs in the container.
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority

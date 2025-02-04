@@ -87,3 +87,13 @@ Starting the yolo_ros container independently:
     ```
     ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera/rgb threshold:=0.7 imgsz_height:=480
     ```
+
+First time setup:
+
+YOLO ROS:
+- You need to get it here: https://github.com/mgonzs13/yolo_ros
+    ```
+    git clone https://github.com/mgonzs13/yolo_ros.git
+    cd yolo_ros
+    docker build -t yolo_ros .
+    ```
