@@ -1,1 +1,4 @@
 sam2_checkpoints/
+
+# Persistent data
+.docker_volumes

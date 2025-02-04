@@ -282,13 +282,13 @@ class UIBuilder:
 
 
         # Relative path to the assets folder
-        relative_path = Path("IsaacSim-ros_workspaces/humble_ws/src/isaac_cam_conveyor/usd/ros_cam_conveyor_scene.usd")
+        relative_path = Path("usd/ros_cam_conveyor_scene.usd")
 
         # Convert to absolute path
         absolute_path = relative_path.resolve()
 
         stage_utils.add_reference_to_stage(
-            usd_path="/home/agillies8/IsaacSim-ros_workspaces/humble_ws/src/isaac_cam_conveyor/usd/ros_cam_conveyor_scene.usd",
+            usd_path="/usd/ros_cam_conveyor_scene.usd",
             prim_path="/World"
             )
 

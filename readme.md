@@ -18,7 +18,9 @@ RUNNING STACK ON SINGLE MACHINE (No Compression):
     - network mode: host is commented out on all containers
 
 1. Start Isaac Sim:
-    - Add the "Isaac Cam Conveyor" extension with the isaac extension manager
+    - Isaac sim will start automatically from winth a docker container
+    - Add the "Isaac Cam Conveyor" extension with the isaac extension manager if isnt done so already
+    - Also make sure the conveyor extensions are loaded. You need the 0.4.0 and 1.1.0 old versions before isaac 4.5
     - Click on the extension and click "load"
     - Once the secne is loaded, click "run" (Dont hit play in the sidebar)
 

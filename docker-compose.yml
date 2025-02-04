@@ -128,6 +128,40 @@ services:
       ros2 launch yolo_bringup yolo.launch.py model:=src/models/best640.pt input_image_topic:=/camera_02/rgb threshold:=0.7 imgsz_height:=480 namespace:=kicker_02
       "
 
+  isaac_sim:
+    image: nvcr.io/nvidia/isaac-sim:4.2.0
+    entrypoint: bash
+    stdin_open: true
+    tty: true
+    environment:
+      # For omniverse EULA
+      ACCEPT_EULA: Y
+      PRIVACY_CONSENT: Y
+      #For activating ros humble bridge
+      ROS_DISTRO: humble
+      #FASTRTPS_DEFAULT_PROFILES_FILE: /workspace/humble_ws/fastdds.xml #this doesn't seem to be necessary in isaac_sim 4.2
+      RMW_IMPLEMENTATION: rmw_fastrtps_cpp # #rmw_fastrtps_cpp if you want fastrtps, but ros_nodes uses cyclonedds right now
+      LD_LIBRARY_PATH: /isaac-sim/exts/omni.isaac.ros2_bridge/humble/lib
+      # Necessary for display passthrough
+      DISPLAY: $DISPLAY
+    network_mode: host
+    volumes:
+      - ./.docker_volumes/isaac_sim/cache/kit:/isaac-sim/kit/cache:rw
+      - ./.docker_volumes/isaac_sim/cache/ov:/root/.cache/ov:rw
+      - ./.docker_volumes/isaac_sim/cache/pip:/root/.cache/pip:rw
+      - ./.docker_volumes/isaac_sim/cache/glcache:/root/.cache/nvidia/GLCache:rw
+      - ./.docker_volumes/isaac_sim/cache/computecache:/root/.nv/ComputeCache:rw
+      - ./.docker_volumes/isaac_sim/logs:/root/.nvidia-omniverse/logs:rw
+      - ./.docker_volumes/isaac_sim/data:/root/.local/share/ov/data:rw
+      - ./.docker_volumes/isaac_sim/documents:/root/Documents:rw      
+      # Necessary for display passthrough
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      # - "./launch-profiles/${LAUNCH_PROFILE:- 'set in docker/_shared'}:/robot/launch-profile/"
+      #for reaching isaac extension:
+      - ./isaac_extensions:/isaac_extensions
+      - ./usd:/usd
+    command: ./runapp.sh -v --ext-folder /isaac_extensions --enable CamConveyor
+
   # cam_decompressor:
   #     build:
   #       context: compression_container  # The directory containing the Dockerfile
